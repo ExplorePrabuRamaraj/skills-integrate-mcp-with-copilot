@@ -7,47 +7,169 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+
     <header>
       <h1>Mergington High School</h1>
       <h2>Extracurricular Activities</h2>
     </header>
+    <nav class="top-menu">
+      <a href="#dashboard-container" class="menu-link">Dashboard</a>
+      <span class="menu-separator">|</span>
+      <a href="#activities-container" class="menu-link">Activities</a>
+      <span class="menu-separator">|</span>
+      <a href="#signup-container" class="menu-link">Sign Up</a>
+      <span class="menu-separator">|</span>
+      <a href="#student-profile-container" class="menu-link">Student Profile</a>
+      <span class="menu-separator">|</span>
+      <a href="#attendance-mark-container" class="menu-link">Mark Attendance</a>
+      <span class="menu-separator">|</span>
+      <a href="#attendance-history-container" class="menu-link">Attendance History</a>
+      <span class="menu-separator">|</span>
+      <a href="#notification-send-container" class="menu-link">Send Notification</a>
+      <span class="menu-separator">|</span>
+      <a href="#notification-history-container" class="menu-link">Notifications</a>
+    </nav>
+    <main class="main-content">
+        <section id="dashboard-container">
+          <h3>Dashboard</h3>
+          <div id="dashboard-total"></div>
+          <div id="dashboard-participants"></div>
+          <div id="dashboard-activity-list"></div>
+        </section>
 
-
-    <main>
-      <section id="dashboard-container">
-        <h3>Dashboard</h3>
-        <div id="dashboard-total"></div>
-        <div id="dashboard-participants"></div>
-        <div id="dashboard-activity-list"></div>
-      </section>
-
-      <section id="activities-container">
-        <h3>Available Activities</h3>
-        <div id="activities-list">
-          <!-- Activities will be loaded here -->
-          <p>Loading activities...</p>
-        </div>
-      </section>
-
-      <section id="signup-container">
-        <h3>Sign Up for an Activity</h3>
-        <form id="signup-form">
-          <div class="form-group">
-            <label for="email">Student Email:</label>
-            <input type="email" id="email" required placeholder="your-email@mergington.edu" />
+        <section id="activities-container">
+          <h3>Available Activities</h3>
+          <div id="activities-list">
+            <!-- Activities will be loaded here -->
+            <p>Loading activities...</p>
           </div>
-          <div class="form-group">
-            <label for="activity">Select Activity:</label>
-            <select id="activity" required>
-              <option value="">-- Select an activity --</option>
-              <!-- Activity options will be loaded here -->
-            </select>
+          <div id="waitlist-container">
+            <h3>Activity Waitlists</h3>
+            <div id="waitlist-list">
+              <!-- Waitlists will be loaded here -->
+            </div>
           </div>
-          <button type="submit">Sign Up</button>
-        </form>
-        <div id="message" class="hidden"></div>
-      </section>
-    </main>
+        </section>
+
+        <section id="signup-container">
+          <h3>Sign Up for an Activity</h3>
+          <form id="signup-form">
+            <div class="form-group">
+              <label for="email">Student Email:</label>
+              <input type="email" id="email" required placeholder="your-email@mergington.edu" />
+            </div>
+            <div class="form-group">
+              <label for="name">Student Name:</label>
+              <input type="text" id="name" required placeholder="Your Name" />
+            </div>
+            <div class="form-group">
+              <label for="grade">Grade:</label>
+              <input type="text" id="grade" required placeholder="e.g. 10th" />
+            </div>
+            <div class="form-group">
+              <label for="activity">Select Activity:</label>
+              <select id="activity" required>
+                <option value="">-- Select an activity --</option>
+                <!-- Activity options will be loaded here -->
+              </select>
+            </div>
+            <button type="submit">Sign Up</button>
+          </form>
+          <div id="message" class="hidden"></div>
+        </section>
+
+        <section id="student-profile-container">
+          <h3>View Student Profile</h3>
+          <form id="profile-form">
+            <div class="form-group">
+              <label for="profile-email">Student Email:</label>
+              <input type="email" id="profile-email" required placeholder="student-email@mergington.edu" />
+            </div>
+            <button type="submit">View Profile</button>
+          </form>
+          <div id="profile-result"></div>
+        </section>
+
+        <section id="attendance-mark-container">
+          <h3>Mark Attendance (Admin/Teacher)</h3>
+          <form id="attendance-mark-form">
+            <div class="form-group">
+              <label for="attendance-activity">Activity Name:</label>
+              <input type="text" id="attendance-activity" required placeholder="Activity Name" />
+            </div>
+            <div class="form-group">
+              <label for="attendance-email">Student Email:</label>
+              <input type="email" id="attendance-email" required placeholder="student-email@mergington.edu" />
+            </div>
+            <div class="form-group">
+              <label for="attendance-date">Date:</label>
+              <input type="date" id="attendance-date" required />
+            </div>
+            <div class="form-group">
+              <label for="attendance-present">Present:</label>
+              <select id="attendance-present" required>
+                <option value="true">Present</option>
+                <option value="false">Absent</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="attendance-user-email">Your Email (Admin/Teacher):</label>
+              <input type="email" id="attendance-user-email" required placeholder="your-email@mergington.edu" />
+            </div>
+            <button type="submit">Mark Attendance</button>
+          </form>
+          <div id="attendance-mark-message"></div>
+        </section>
+
+        <section id="attendance-history-container">
+          <h3>View Attendance History</h3>
+          <form id="attendance-history-form">
+            <div class="form-group">
+              <label for="attendance-history-email">Student Email:</label>
+              <input type="email" id="attendance-history-email" required placeholder="student-email@mergington.edu" />
+            </div>
+            <div class="form-group">
+              <label for="attendance-history-user-email">Your Email:</label>
+              <input type="email" id="attendance-history-user-email" required placeholder="your-email@mergington.edu" />
+            </div>
+            <button type="submit">View Attendance</button>
+          </form>
+          <div id="attendance-history-result"></div>
+        </section>
+
+        <section id="notification-send-container">
+          <h3>Send Notification (Admin/Teacher)</h3>
+          <form id="notification-send-form">
+            <div class="form-group">
+              <label for="notification-email">Student Email:</label>
+              <input type="email" id="notification-email" required placeholder="student-email@mergington.edu" />
+            </div>
+            <div class="form-group">
+              <label for="notification-message">Message:</label>
+              <input type="text" id="notification-message" required placeholder="Notification message" />
+            </div>
+            <div class="form-group">
+              <label for="notification-user-email">Your Email (Admin/Teacher):</label>
+              <input type="email" id="notification-user-email" required placeholder="your-email@mergington.edu" />
+            </div>
+            <button type="submit">Send Notification</button>
+          </form>
+          <div id="notification-send-message"></div>
+        </section>
+
+        <section id="notification-history-container">
+          <h3>View Notifications</h3>
+          <form id="notification-history-form">
+            <div class="form-group">
+              <label for="notification-history-email">Student Email:</label>
+              <input type="email" id="notification-history-email" required placeholder="student-email@mergington.edu" />
+            </div>
+            <button type="submit">View Notifications</button>
+          </form>
+          <div id="notification-history-result"></div>
+        </section>
+      </main>
+    </div>
 
     <footer>
       <p>&copy; 2023 Mergington High School</p>

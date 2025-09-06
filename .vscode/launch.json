@@ -13,7 +13,7 @@
         "src.app:app",
         "--reload"
       ],
-      "jinja": true
+       "cwd": "${workspaceFolder}"
     }
   ]
 }

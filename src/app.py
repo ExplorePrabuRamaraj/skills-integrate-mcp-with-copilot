@@ -90,22 +90,22 @@ def init_db():
     Base.metadata.create_all(bind=engine)
     # Seed initial activities if DB is empty
     db = SessionLocal()
-    if db.query(Activity).count() == 0:
-        initial_activities = [
-# Waitlist logic in signup endpoint
-            {"name": "Chess Club", "description": "Learn strategies and compete in chess tournaments", "schedule": "Fridays, 3:30 PM - 5:00 PM", "capacity": 12},
-            {"name": "Programming Class", "description": "Learn programming fundamentals and build software projects", "schedule": "Tuesdays and Thursdays, 3:30 PM - 4:30 PM", "capacity": 20},
-            {"name": "Gym Class", "description": "Physical education and sports activities", "schedule": "Mondays, Wednesdays, Fridays, 2:00 PM - 3:00 PM", "capacity": 30},
-            {"name": "Soccer Team", "description": "Join the school soccer team and compete in matches", "schedule": "Tuesdays and Thursdays, 4:00 PM - 5:30 PM", "capacity": 22},
-            {"name": "Basketball Team", "description": "Practice and play basketball with the school team", "schedule": "Wednesdays and Fridays, 3:30 PM - 5:00 PM", "capacity": 15},
-            {"name": "Art Club", "description": "Explore your creativity through painting and drawing", "schedule": "Thursdays, 3:30 PM - 5:00 PM", "capacity": 15},
-            {"name": "Drama Club", "description": "Act, direct, and produce plays and performances", "schedule": "Mondays and Wednesdays, 4:00 PM - 5:30 PM", "capacity": 20},
-            {"name": "Math Club", "description": "Solve challenging problems and participate in math competitions", "schedule": "Tuesdays, 3:30 PM - 4:30 PM", "capacity": 10},
-            {"name": "Debate Team", "description": "Develop public speaking and argumentation skills", "schedule": "Fridays, 4:00 PM - 5:30 PM", "capacity": 12}
-        ]
-        for act in initial_activities:
+    initial_activities = [
+        {"name": "Chess Club", "description": "Learn strategies and compete in chess tournaments", "schedule": "Fridays, 3:30 PM - 5:00 PM", "capacity": 12},
+        {"name": "Programming Class", "description": "Learn programming fundamentals and build software projects", "schedule": "Tuesdays and Thursdays, 3:30 PM - 4:30 PM", "capacity": 20},
+        {"name": "Gym Class", "description": "Physical education and sports activities", "schedule": "Mondays, Wednesdays, Fridays, 2:00 PM - 3:00 PM", "capacity": 30},
+        {"name": "Soccer Team", "description": "Join the school soccer team and compete in matches", "schedule": "Tuesdays and Thursdays, 4:00 PM - 5:30 PM", "capacity": 22},
+        {"name": "Basketball Team", "description": "Practice and play basketball with the school team", "schedule": "Wednesdays and Fridays, 3:30 PM - 5:00 PM", "capacity": 15},
+        {"name": "Art Club", "description": "Explore your creativity through painting and drawing", "schedule": "Thursdays, 3:30 PM - 5:00 PM", "capacity": 15},
+        {"name": "Drama Club", "description": "Act, direct, and produce plays and performances", "schedule": "Mondays and Wednesdays, 4:00 PM - 5:30 PM", "capacity": 20},
+        {"name": "Math Club", "description": "Solve challenging problems and participate in math competitions", "schedule": "Tuesdays, 3:30 PM - 4:30 PM", "capacity": 10},
+        {"name": "Debate Team", "description": "Develop public speaking and argumentation skills", "schedule": "Fridays, 4:00 PM - 5:30 PM", "capacity": 12},
+        {"name": "GitHub Skills", "description": "Learn practical coding and collaboration skills with GitHub. First part of the GitHub Certifications program.", "schedule": "Thursdays, 4:00 PM - 5:00 PM", "capacity": 25}
+    ]
+    for act in initial_activities:
+        if not db.query(Activity).filter(Activity.name == act["name"]).first():
             db.add(Activity(**act))
-        db.commit()
+    db.commit()
     db.close()
 
 app = FastAPI(title="Mergington High School API",

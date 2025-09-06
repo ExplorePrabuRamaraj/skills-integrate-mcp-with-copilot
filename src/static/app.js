@@ -1,8 +1,30 @@
+
 document.addEventListener("DOMContentLoaded", () => {
+  const dashboardTotal = document.getElementById("dashboard-total");
+  const dashboardParticipants = document.getElementById("dashboard-participants");
+  const dashboardActivityList = document.getElementById("dashboard-activity-list");
   const activitiesList = document.getElementById("activities-list");
   const activitySelect = document.getElementById("activity");
   const signupForm = document.getElementById("signup-form");
   const messageDiv = document.getElementById("message");
+
+  // Function to fetch dashboard stats from API
+  async function fetchDashboard() {
+    try {
+      const response = await fetch("/dashboard");
+      const dashboard = await response.json();
+      dashboardTotal.textContent = `Total Activities: ${dashboard.total_activities}`;
+      dashboardParticipants.textContent = `Total Participants: ${dashboard.total_participants}`;
+      // Render activity stats
+      dashboardActivityList.innerHTML = "<h4>Activities Overview</h4>";
+      dashboardActivityList.innerHTML += `<ul>${dashboard.activity_stats.map(stat => `<li><strong>${stat.name}</strong>: ${stat.participants} participants, ${stat.spots_left} spots left</li>`).join("")}</ul>`;
+    } catch (error) {
+      dashboardTotal.textContent = "Failed to load dashboard.";
+      dashboardParticipants.textContent = "";
+      dashboardActivityList.textContent = "";
+      console.error("Error fetching dashboard:", error);
+    }
+  }
 
   // Function to fetch activities from API
   async function fetchActivities() {
@@ -156,5 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Initialize app
+  fetchDashboard();
   fetchActivities();
 });

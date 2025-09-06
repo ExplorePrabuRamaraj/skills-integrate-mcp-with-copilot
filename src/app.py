@@ -19,6 +19,7 @@ current_dir = Path(__file__).parent
 app.mount("/static", StaticFiles(directory=os.path.join(Path(__file__).parent,
           "static")), name="static")
 
+from fastapi import Request
 # In-memory activity database
 activities = {
     "Chess Club": {
@@ -83,6 +84,24 @@ def root():
     return RedirectResponse(url="/static/index.html")
 
 
+# Dashboard endpoint
+@app.get("/dashboard")
+def get_dashboard():
+    total_activities = len(activities)
+    total_participants = sum(len(a["participants"]) for a in activities.values())
+    activity_stats = [
+        {
+            "name": name,
+            "participants": len(details["participants"]),
+            "spots_left": details["max_participants"] - len(details["participants"])
+        }
+        for name, details in activities.items()
+    ]
+    return {
+        "total_activities": total_activities,
+        "total_participants": total_participants,
+        "activity_stats": activity_stats
+    }
 @app.get("/activities")
 def get_activities():
     return activities

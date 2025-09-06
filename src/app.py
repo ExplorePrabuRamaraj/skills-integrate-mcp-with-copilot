@@ -88,7 +88,8 @@ class Participant(Base):
 
 def init_db():
     Base.metadata.create_all(bind=engine)
-    # Seed initial activities if DB is empty
+    # Seed initial activities: always ensure all required activities are present
+    # This logic checks for each activity and adds it if missing, making seeding idempotent and robust
     db = SessionLocal()
     initial_activities = [
         {"name": "Chess Club", "description": "Learn strategies and compete in chess tournaments", "schedule": "Fridays, 3:30 PM - 5:00 PM", "capacity": 12},
@@ -100,9 +101,11 @@ def init_db():
         {"name": "Drama Club", "description": "Act, direct, and produce plays and performances", "schedule": "Mondays and Wednesdays, 4:00 PM - 5:30 PM", "capacity": 20},
         {"name": "Math Club", "description": "Solve challenging problems and participate in math competitions", "schedule": "Tuesdays, 3:30 PM - 4:30 PM", "capacity": 10},
         {"name": "Debate Team", "description": "Develop public speaking and argumentation skills", "schedule": "Fridays, 4:00 PM - 5:30 PM", "capacity": 12},
-        {"name": "GitHub Skills", "description": "Learn practical coding and collaboration skills with GitHub. First part of the GitHub Certifications program.", "schedule": "Thursdays, 4:00 PM - 5:00 PM", "capacity": 25}
+    # Added 'GitHub Skills' to ensure it is always available for registration and UI display
+    {"name": "GitHub Skills", "description": "Learn practical coding and collaboration skills with GitHub. First part of the GitHub Certifications program.", "schedule": "Thursdays, 4:00 PM - 5:00 PM", "capacity": 25}
     ]
     for act in initial_activities:
+        # Only add the activity if it does not already exist in the database
         if not db.query(Activity).filter(Activity.name == act["name"]).first():
             db.add(Activity(**act))
     db.commit()
